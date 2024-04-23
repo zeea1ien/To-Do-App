@@ -75,24 +75,15 @@ public class HomeFragment extends Fragment  {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         manager = new DataBaseManager(getContext());
-
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-
         setProgressBar();
-
         calendarButton = (ImageButton)view.findViewById(R.id.calendarButton);
-
         addTask = (EditText) view.findViewById(R.id.editTextAddTask);
-
         listView = (ListView) view.findViewById(R.id.listTodo);
-
         addTaskButton = (Button)view.findViewById(R.id.addTaskButton);
-
         viewModel = new ViewModelProvider(requireActivity()).get(FontSizeViewModel.class);
 
 
