@@ -19,9 +19,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
-
+// firebase authentication object
     FirebaseAuth firebaseAuth;
-    EditText emailText;
+    EditText emailText;  //edit text for email input
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,14 +30,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         emailText = findViewById(R.id.email);
 
     }
-
+//Activity to handle Forgot Password functionality
     public void forgotpasswordhandler(View view) {
         String email = emailText.getText().toString();
         if(email.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Email is empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
+// notify user email sent, section above is for requesting an email for password change to be made
         firebaseAuth.getInstance().sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -52,7 +52,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 });
 
     }
-
+//event handler to navigate back to login screen and intent to start the login Activity
     public void movetohome(View view) {
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);

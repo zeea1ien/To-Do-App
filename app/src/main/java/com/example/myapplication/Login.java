@@ -14,13 +14,13 @@ import com.example.myapplication.Controllers.ToDoListActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
-
+//Activity to manager my user login using firebase authentication
 public class Login extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
     EditText emailText, passwordText;
     Button loginButton, signupButton, forgotButton;
-
+//initilise firebase auth and UI components
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +31,7 @@ public class Login extends AppCompatActivity {
         loginButton = findViewById(R.id.loginbtn);
         signupButton = findViewById(R.id.signupbtn);
         forgotButton = (Button) findViewById(R.id.forgotbutton);
+        //set up for listeners
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,14 +39,12 @@ public class Login extends AppCompatActivity {
                 authenticateUser();
             }
         });
-
         forgotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 movetoforgotpassword();
             }
         });
-
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +52,7 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-
+//authenticate user with their email and password
     public void authenticateUser() {
         String email = emailText.getText().toString().trim();
         String password = passwordText.getText().toString().trim();
@@ -64,14 +63,13 @@ public class Login extends AppCompatActivity {
         }
 
 
-
+//check for registered emails and authenticate
         firebaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(this, firebaseTask -> {
             if (firebaseTask.isSuccessful()) {
                 SignInMethodQueryResult result = firebaseTask.getResult();
                 if (result == null || result.getSignInMethods() == null) {
 
                     showAlert("User not registered", "Please register first", R.drawable.close, true);
-
                 } else {
                     firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
@@ -97,16 +95,14 @@ public class Login extends AppCompatActivity {
 
             }
         });
-
-
     }
 
-
+//navigate to signup activity
     public void moveToSignup() {
         Intent intent = new Intent(this, Signup.class);
         startActivity(intent);
     }
-
+//show alert dialogue to user
     public void showAlert(String message, String title, int icon) {
         showAlert(message, title, icon, false);
     }
@@ -117,11 +113,10 @@ public class Login extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                     if (moveToSignup) moveToSignup();
-
                 }
             }).show();
     }
-
+//navigate to forgot password activity
     public void movetoforgotpassword() {
         Intent intent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(intent);

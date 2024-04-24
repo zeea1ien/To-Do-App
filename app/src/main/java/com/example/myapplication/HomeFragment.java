@@ -46,9 +46,10 @@ import java.util.concurrent.ExecutionException;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment  {
-
-
+//home fragment representing the home screen of my app, this is where all my tasks will be listed
+//manager for the database
     DataBaseManager manager;
+    //UI elements on the home screen
     ImageButton calendarButton;
     ListView listView;
     CustomAdapter customAdapter;
@@ -57,21 +58,19 @@ public class HomeFragment extends Fragment  {
     String selectedDate;
 
     Button addTaskButton;
-
+//ViewModel for managing the UI-related data stuff
     private FontSizeViewModel viewModel;
-
+//progress bar
     ProgressBar progressBar;
-
+// code is unused, but not deleted incase i want to come back and use this.
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
-
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      
     }
 
     @Override
@@ -86,7 +85,7 @@ public class HomeFragment extends Fragment  {
         addTaskButton = (Button)view.findViewById(R.id.addTaskButton);
         viewModel = new ViewModelProvider(requireActivity()).get(FontSizeViewModel.class);
 
-
+//set up button listeners
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +98,7 @@ public class HomeFragment extends Fragment  {
                 openCalendar();
             }
         });
-
+//data load from database
         try {
             printDB(true, true);
         } catch (ExecutionException | InterruptedException e) {
@@ -109,7 +108,7 @@ public class HomeFragment extends Fragment  {
         return view;
     }
 
-
+//opens the date picker so you can add a new task and select a date
     private void openCalendar() {
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -128,7 +127,7 @@ public class HomeFragment extends Fragment  {
 
         datePickerDialog.show();
     }
-
+// adds task from the UI, validates input before adding it to the database
     public void addTaskEvent(View v) {
         Runnable runnable = new Runnable() {
             @Override
@@ -157,7 +156,7 @@ public class HomeFragment extends Fragment  {
         };
         runnable.run();
     }
-
+//updates the list view from the database
     public void printDB(boolean updateFromServer, boolean updateFromDb) throws ExecutionException, InterruptedException {
         if (updateFromDb) {
             customAdapter = new CustomAdapter(manager.readFromDB(updateFromServer));
@@ -170,7 +169,8 @@ public class HomeFragment extends Fragment  {
 
     }
 
-
+// displaying tasks in list view
+    // created space between the code, so i can read it better to spot my errors
     public class CustomAdapter extends BaseAdapter {
         ArrayList<TodoItem> todoList;
 
@@ -277,8 +277,6 @@ public class HomeFragment extends Fragment  {
             runnable.run();
         }
 
-
-
     }
     public void showAlert(String title, String message, int icon) {
         new AlertDialog.Builder(getActivity()).setIcon(icon).setTitle(title).setMessage(message).setNeutralButton("Okay", new DialogInterface.OnClickListener() {
@@ -288,7 +286,7 @@ public class HomeFragment extends Fragment  {
             }
         }).show();
     }
-
+// update my progress bar based on task completion status
     void setProgressBar() {
         int completedTasks = manager.getCompletedTasksCount();
         int totalTasks = manager.getTotalTasksCount();

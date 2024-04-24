@@ -7,3 +7,4 @@ buildscript {
 plugins {
     id("com.android.application") version "8.0.2" apply false
 }
+// fixed version control in Git as android studio gradle still broken

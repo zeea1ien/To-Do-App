@@ -3,7 +3,7 @@ package com.example.myapplication;
 import android.widget.Toast;
 
 public class Validation {
-
+//this section handles validation of user input fields.
     public static String validate(String email, String password) {
         if (email.length() == 0) {
             return "Email is empty";
@@ -12,10 +12,9 @@ public class Validation {
         } else if (!isValidEmail(email)) {
             return "Invalid Email";
         }
-
-        return "";
+        return "";  //returns an empty string if theres no errors
     }
-
+//checks if provided email address follows a valid pattern. if true email is valid, false not valid.
     private static boolean isValidEmail(String email) {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         return email.matches(emailPattern);
@@ -36,6 +35,6 @@ public class Validation {
         } else if (password.length() < 6) {
             return "Password must be greater than 6 characters";
         }
-        return "";
+        return ""; // returns empty string if there are no errors
     }
 }
